@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/Vue3.js"></script>
+    <title>Contactos</title>
+</head>
+<body>
+    <header>
+        AGENDA TELEFÓNICA
+    </header>
+    <section id="seccion">
+        <fieldset class="col-6">
+            <legend>Nuevo contacto</legend>
+            Nombre: <input v-model="nuevoCliente" type="text">
+            <br>
+            Contacto: <input v-model="nuevoContacto" type="text">
+            <br>
+            Categoría: 
+            <select v-model="nuevaCategoria">
+                <option></option>
+                <option>Familiar</option>
+                <option>Cercanos</option>
+                <option>Emergencia</option>
+                <option>Laboral</option>
+            </select>
+            <button @click="agregar()">Agregar</button>
+        </fieldset>
+
+        <article>
+            <table>
+                <tr>
+                    <th colspan="6"> Contactos:</th>
+                </tr>
+                <tr v-for="(numero, index) in contactos" :class="{fondo: numero.cliente}">
+                    <td><button @click="eliminarContacto(index)">X</button></td>
+                    <td>{{ numero.cliente }}</td>
+                    <td>{{ numero.contacto }}</td>
+                    <td>{{ numero.categoria }}</td>
+                    <!-- Mensajes -->
+                    <td>
+                        <button @click="incrementarMensajes(numero)" :disabled="numero.mensajes == 25">+</button>
+                        <input type="text" v-model="numero.mensajes" readonly>
+                        <button @click="decrementarMensajes(numero)" :disabled="numero.mensajes == 0">-</button>
+                    </td> 
+                    <!-- Llamadas -->
+                    <td>
+                        <button @click="incrementarLlamadas(numero)" :disabled="numero.llamadas == 15">+</button>
+                        <input type="text" v-model="numero.llamadas" readonly>
+                        <button @click="decrementarLlamadas(numero)" :disabled="numero.llamadas == 0">-</button>
+                    </td> 
+                </tr>
+                <tr>
+                    <td colspan="3" id="titulos">
+                      <h4>Llamadas:</h4>
+                      <h4>Mensajes:</h4>
+                    </td>
+                    <td id="totales">
+                      <h4>{{ totalMensajes }}</h4>
+                      <h4>{{ totalLlamadas }}</h4>
+                    </td>
+                  </tr>
+            </table>
+        </article>
+
+    </section>
+    <script src="../js/script.js"></script>
+</body>
+</html>
+
